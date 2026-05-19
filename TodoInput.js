@@ -1,24 +1,27 @@
-import { dispatchAddEvent } from './fuggvenyek.js';
 
-export class TodoInput {
-    constructor(ipElem) {
-        this.pElem = ipElem;
-        this.inputElem = document.createElement('input');
-        this.buttonElem = document.createElement('button');
-        this.buttonElem.innerText = 'Hozzáadás';
+export default class TodoInput {
+  constructor(szuloElem, hozzaadCallback) {
+    this.szuloElem = szuloElem;
+    this.hozzaadCallback = hozzaadCallback;
+    this.megjelenit();
+  }
 
-        this.pElem.appendChild(this.inputElem);
-        this.pElem.appendChild(this.buttonElem);
+  megjelenit() {
+    let kod = `
+      <input type="text" placeholder="Új feladat">
+      <button>Hozzáadás</button>
+    `;
 
-        this.buttonElem.onclick = () => {
-            if (this.inputElem.value.trim() !== "") {
-                this.add("add", this.inputElem.value);
-                this.inputElem.value = "";
-            }
-        };
-    }
+    this.szuloElem.innerHTML = kod;
 
-    add(eventName, detailValue) {
-        return dispatchAddEvent(eventName, detailValue);
-    }
+    const input = this.szuloElem.querySelector("input");
+    const gomb = this.szuloElem.querySelector("button");
+
+    gomb.addEventListener("click", () => {
+      if (input.value.trim() !== "") {
+        this.hozzaadCallback(input.value);
+        input.value = "";
+      }
+    });
+  }
 }

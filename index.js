@@ -1,8 +1,13 @@
-import { Todos } from './Todos.js';
+import TodoLista from "./TodoLista.js";
+import TodoInput from "./TodoInput.js";
 
-const inputContainer = document.getElementById('todo-input-container');
-const listContainer = document.getElementById('todo-list-container');
+const listaTarolo = document.getElementById("lista");
+const inputTarolo = document.getElementById("input");
 
-const initialTodos = ['Első teszt feladat', 'Második teszt feladat'];
+const kezdoLista = ["Első feladat", "Második feladat"];
 
-new Todos(listContainer, inputContainer, initialTodos);
+const todoLista = new TodoLista(kezdoLista, listaTarolo);
+
+new TodoInput(inputTarolo, (szoveg) => {
+  todoLista.hozzaad(szoveg);
+});
